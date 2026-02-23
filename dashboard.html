@@ -772,6 +772,12 @@ async function loadFiles(){
   el.innerHTML='<div style="text-align:center;padding:20px;color:var(--dim);font-size:.75rem">Login ke Firebase dulu<br>atau Connect ke ESP32</div>';
 }
 
+// Helper untuk avoid nested template literal (crash JS)
+function getDlUrl(f, name){
+  if(f.src==='gdrive' && f.id) return 'https://drive.google.com/uc?export=download&id='+f.id;
+  return espBase+'/download?f='+name;
+}
+
 function renderFiles(){
   const el=document.getElementById('fmList');
   if(!fmFiles.length){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--dim);font-size:.75rem">Belum ada file CSV di SD</div>';return;}
@@ -787,7 +793,7 @@ function renderFiles(){
       <div class="fm-acts">
         <button class="btn-a ba-prev" onclick="event.stopPropagation();selectFile('${name}')">👁 Preview</button>
         <button class="btn-a ba-tbl" onclick="event.stopPropagation();quickLoadTable('${name}')">📋 Ke Tabel</button>
-        <a class="btn-a ba-dl" href="${f.src==='gdrive' ? `https://drive.google.com/uc?export=download&id=${f.id}` : `${espBase}/download?f=${name}`}" 
+        <a class="btn-a ba-dl" href="${getDlUrl(f,name)}" 
           download="${name}" target="_blank" onclick="event.stopPropagation()">⬇ DL</a>
         <button class="btn-a ba-del" onclick="event.stopPropagation();askDelete('${name}')">🗑</button>
       </div>

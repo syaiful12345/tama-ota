@@ -463,16 +463,24 @@ function switchTab(n){
 }
 
 // ── FIREBASE AUTH ─────────────────────────────────────────────
-auth_fb.signInWithEmailAndPassword("cansniffer@gmail.com","cansniffer123")
-  .then(()=>{
+// Pakai onAuthStateChanged agar lebih reliable
+auth_fb.onAuthStateChanged(user=>{
+  if(user){
     setDot('fbDot','fbLabel',true,'Firebase OK');
-    startListeners();loadSlots();
-  // Load file dari GDrive segera setelah login (token tersedia)
-  setTimeout(()=>loadFiles(), 1500);
+    startListeners(); loadSlots();
+    setTimeout(()=>loadFiles(), 1500);
     document.getElementById('iProject').textContent=firebaseConfig.projectId;
-    document.getElementById('iAuth').textContent='cansniffer@gmail.com';
+    document.getElementById('iAuth').textContent=user.email||'OK';
     document.getElementById('iDb').textContent=firebaseConfig.databaseURL;
-  }).catch(()=>setDot('fbDot','fbLabel',false,'Firebase Gagal'));
+  } else {
+    // Belum login — coba login
+    auth_fb.signInWithEmailAndPassword("cansniffer@gmail.com","cansniffer123")
+      .catch(e=>{
+        console.error("[Firebase] Auth error:", e.code, e.message);
+        setDot('fbDot','fbLabel',false,'Firebase Gagal: '+e.code);
+      });
+  }
+});
 
 function setDot(dotId,lblId,ok,label){
   document.getElementById(dotId).className='dot '+(ok?'online':'offline');

@@ -9,45 +9,44 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <style>
-:root{--bg:#03080f;--bg2:#07111f;--bg3:#0b1a2e;--border:#0f2a45;--cyan:#00d4ff;--green:#00ff88;--yellow:#ffd700;--red:#ff4455;--orange:#ff8c00;--dim:#4a7090;--text:#c8dff0;--mono:'JetBrains Mono',monospace;--display:'Rajdhani',sans-serif}
+:root{--bg:#03080f;--bg2:#07111f;--bg3:#0b1a2e;--border:#0f2a45;--cyan:#00d4ff;--green:#00ff88;--yellow:#ffd700;--red:#ff4455;--orange:#ff8c00;--tg:#29b6f6;--dim:#4a7090;--text:#c8dff0;--mono:'JetBrains Mono',monospace;--display:'Rajdhani',sans-serif}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;min-height:100vh;overflow-x:hidden}
 ::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-@keyframes recblink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes recblink{0%,100%{opacity:1}50%{opacity:.15}}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
 /* TOPBAR */
-.topbar{display:flex;align-items:center;gap:14px;padding:0 20px;background:var(--bg2);border-bottom:1px solid var(--border);height:64px;position:sticky;top:0;z-index:200}
-.logo{font-family:var(--display);font-size:1.3rem;font-weight:700;color:var(--cyan);letter-spacing:3px;text-shadow:0 0 16px #00d4ff55;white-space:nowrap}
+.topbar{display:flex;align-items:center;gap:12px;padding:0 20px;background:var(--bg2);border-bottom:1px solid var(--border);height:64px;position:sticky;top:0;z-index:200}
+.logo-wrap{display:flex;flex-direction:column;gap:1px;flex-shrink:0}
+.logo{font-family:var(--display);font-size:1.3rem;font-weight:700;color:var(--cyan);letter-spacing:3px;text-shadow:0 0 16px #00d4ff55}
 .logo em{color:var(--yellow);font-style:normal}
-.logo-wrap{display:flex;flex-direction:column;gap:1px}
-.device-name{font-family:'Orbitron',var(--display);font-size:.72rem;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,var(--cyan),var(--yellow),var(--cyan));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;white-space:nowrap}
-@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
-.brand-tag{font-size:.55rem;letter-spacing:2px;color:var(--dim);font-family:var(--mono);white-space:nowrap;display:flex;align-items:center;gap:4px}
-.brand-tag .x-sep{color:var(--yellow);font-size:.6rem}
-.divider-v{width:1px;height:32px;background:var(--border);margin:0 4px}
-.logo em{color:var(--yellow);font-style:normal}
-.dot{width:8px;height:8px;border-radius:50%;background:#444;transition:background .3s}
+.device-name{font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:900;letter-spacing:4px;background:linear-gradient(90deg,var(--cyan),var(--yellow),var(--cyan));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite}
+.brand-tag{font-size:.55rem;letter-spacing:1.5px;color:var(--dim);display:flex;align-items:center;gap:4px;white-space:nowrap}
+.brand-tag .xs{color:var(--yellow)}
+.divider-v{width:1px;height:32px;background:var(--border);flex-shrink:0;margin:0 2px}
+.dot{width:8px;height:8px;border-radius:50%;background:#333;transition:background .3s;flex-shrink:0}
 .dot.online{background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite}
 .dot.offline{background:var(--red)}
 .dot.rec{background:var(--red);animation:recblink .8s infinite}
-.status-row{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--dim)}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px}
-.esp-ip{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--cyan);font-family:var(--mono);font-size:.75rem;width:140px;transition:border-color .2s}
+.status-row{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--dim);white-space:nowrap}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.esp-ip{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--cyan);font-family:var(--mono);font-size:.75rem;width:130px;transition:border-color .2s}
 .esp-ip:focus{outline:none;border-color:var(--cyan)}
-.btn-connect{padding:5px 12px;background:var(--cyan);color:var(--bg);border:none;border-radius:6px;font-family:var(--display);font-weight:700;font-size:.8rem;cursor:pointer;transition:all .2s}
+.btn-connect{padding:5px 12px;background:var(--cyan);color:var(--bg);border:none;border-radius:6px;font-family:var(--display);font-weight:700;font-size:.8rem;cursor:pointer;white-space:nowrap}
 .btn-connect:hover{background:#00b8dd}
 
-/* TAB */
-.tab-nav{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;gap:2px}
-.tab-btn{padding:10px 18px;background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);font-family:var(--display);font-size:.88rem;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;margin-bottom:-1px}
+/* TABS */
+.tab-nav{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;gap:2px;overflow-x:auto}
+.tab-btn{padding:10px 18px;background:none;border:none;border-bottom:2px solid transparent;color:var(--dim);font-family:var(--display);font-size:.88rem;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;margin-bottom:-1px;white-space:nowrap}
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
-.tab-badge{background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:.6rem;font-family:var(--mono);display:none}
+.tab-badge{background:var(--red);color:#fff;border-radius:10px;padding:1px 6px;font-size:.6rem;display:none}
 .tab-badge.show{display:inline}
-.tab-content{display:none}
-.tab-content.active{display:block}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadein .2s ease}
 
 /* LAYOUT */
 .grid-2{display:grid;grid-template-columns:1fr 360px;gap:16px;padding:16px;max-width:1400px;margin:0 auto}
@@ -56,7 +55,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13
 
 /* CARD */
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
-.card-title{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .ct-left{display:flex;align-items:center;gap:8px}
 
 /* STATS */
@@ -66,15 +65,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13
 .stat-badge .sl{font-size:.6rem;color:var(--dim);text-transform:uppercase;letter-spacing:1px}
 
 /* LIVE */
-.live-frame{background:var(--bg);border-radius:8px;padding:12px;font-family:var(--mono);font-size:.82rem}
+.live-frame{background:var(--bg);border-radius:8px;padding:12px;font-size:.82rem}
 .live-row{display:flex;gap:8px;margin-bottom:6px;align-items:center}
-.live-label{color:var(--dim);width:60px;flex-shrink:0}
-.live-val{color:var(--cyan);font-weight:bold}
-.live-val.marker{color:var(--yellow)}
+.live-label{color:var(--dim);width:70px;flex-shrink:0}
+.live-val{color:var(--cyan);font-weight:bold}.live-val.marker{color:var(--yellow)}
 .byte-grid{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
-.byte-box{width:38px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.65rem;transition:all .25s}
-.byte-box .bidx{color:var(--dim);font-size:.52rem}
-.byte-box .bval{color:var(--cyan);font-size:.72rem;font-weight:bold}
+.byte-box{width:38px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all .25s}
+.byte-box .bidx{color:var(--dim);font-size:.52rem}.byte-box .bval{color:var(--cyan);font-size:.72rem;font-weight:bold}
 .byte-box.changed{background:#00d4ff18;border-color:var(--cyan)}
 
 /* TABLE */
@@ -83,19 +80,17 @@ table{width:100%;border-collapse:collapse;font-size:.73rem}
 th{background:var(--bg3);color:var(--dim);padding:8px 10px;text-align:left;position:sticky;top:0;border-bottom:1px solid var(--border);font-size:.65rem;letter-spacing:1px;text-transform:uppercase;font-weight:600;white-space:nowrap}
 td{padding:6px 10px;border-bottom:1px solid #0b1828}
 tr:hover td{background:var(--bg3)}
-.td-ts{color:var(--dim)}.td-id{color:var(--cyan);font-family:var(--mono);font-weight:bold}.td-data{color:#7ab;font-family:var(--mono)}.td-mrk{color:var(--yellow)}
+.td-ts{color:var(--dim)}.td-id{color:var(--cyan);font-weight:bold}.td-data{color:#7ab}.td-mrk{color:var(--yellow)}
 .tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.6rem}
 .tag.ext{background:#00d4ff18;color:var(--cyan);border:1px solid #00d4ff44}
 .tag.rtr{background:#ffd70018;color:var(--yellow);border:1px solid #ffd70044}
 .tag.mark{background:#ffd70018;color:var(--yellow);border:1px solid #ffd70044}
 tr.row-mrk td{background:rgba(255,215,0,.03)}
-
-/* TABLE MODE PILLS */
 .tbl-mode-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.tbl-pill{padding:3px 10px;border-radius:20px;font-size:.68rem;border:1px solid;cursor:pointer;transition:all .2s;font-family:var(--mono)}
+.tbl-pill{padding:3px 10px;border-radius:20px;font-size:.68rem;border:1px solid;cursor:pointer;transition:all .2s}
 .tbl-pill.live{border-color:var(--red);color:var(--red);background:rgba(255,68,85,.1)}
 .tbl-pill.csv{border-color:var(--green);color:var(--green);background:rgba(0,255,136,.1)}
-.tbl-pill.active{filter:brightness(1.3);box-shadow:0 0 8px currentColor}
+.tbl-pill.active{filter:brightness(1.4);box-shadow:0 0 8px currentColor}
 .tbl-fname{font-size:.68rem;color:var(--cyan);padding:3px 10px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);border-radius:20px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* MARKER */
@@ -110,8 +105,8 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
 .slot-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .slot-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:bold;flex-shrink:0}
 .slot-toggle{position:relative;width:36px;height:20px;background:var(--border);border-radius:10px;cursor:pointer;transition:background .2s}
-.slot-toggle.on{background:#00d4ff44}
-.slot-toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#aaa;top:2px;left:2px;transition:all .2s}
+.slot-toggle.on{background:#00d4ff55}
+.slot-toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#888;top:2px;left:2px;transition:all .2s}
 .slot-toggle.on::after{background:var(--cyan);left:18px}
 .inp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:.8rem;font-family:var(--mono);margin-bottom:8px;transition:border-color .2s}
 .inp:focus{outline:none;border-color:#00d4ff66}
@@ -119,53 +114,53 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
 .slot-result{display:flex;gap:6px;margin-top:8px}
 .result-box{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center}
 .result-box .rlabel{font-size:.6rem;color:var(--dim);margin-bottom:4px}
-.result-box .rval{font-size:1.2rem;font-weight:bold;font-family:var(--mono)}
-.btn-save{width:100%;padding:9px;border-radius:6px;border:1px solid #00d4ff44;background:#00d4ff18;color:var(--cyan);cursor:pointer;font-size:.8rem;margin-top:10px;transition:all .2s;font-family:var(--mono)}
+.result-box .rval{font-size:1.2rem;font-weight:bold}
+.btn-save{width:100%;padding:9px;border-radius:6px;border:1px solid #00d4ff44;background:#00d4ff18;color:var(--cyan);cursor:pointer;font-size:.8rem;margin-top:10px;transition:all .2s}
 .btn-save:hover{background:#00d4ff28}
 
 /* FILE MANAGER */
-.fm-layout{display:grid;grid-template-columns:280px 1fr;gap:14px;height:calc(100vh - 120px)}
+.fm-layout{display:grid;grid-template-columns:300px 1fr;gap:14px;height:calc(100vh - 130px)}
 @media(max-width:800px){.fm-layout{grid-template-columns:1fr;height:auto}}
 .fm-side{background:var(--bg2);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
 .fm-side-hdr{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .fm-side-title{font-family:var(--display);font-weight:700;font-size:.95rem;letter-spacing:2px;color:var(--yellow)}
-.btn-icon{background:none;border:1px solid var(--border);border-radius:4px;color:var(--dim);padding:3px 8px;font-size:.7rem;cursor:pointer;font-family:var(--mono);transition:all .2s}
+.fm-tg-badge{font-size:.58rem;padding:2px 8px;border-radius:10px;background:rgba(41,182,246,.15);border:1px solid rgba(41,182,246,.35);color:var(--tg);margin-top:2px;display:inline-block}
+.btn-icon{background:none;border:1px solid var(--border);border-radius:4px;color:var(--dim);padding:3px 8px;font-size:.7rem;cursor:pointer;transition:all .2s}
 .btn-icon:hover{border-color:var(--cyan);color:var(--cyan)}
+.tg-bar{padding:8px 14px;background:rgba(41,182,246,.06);border-bottom:1px solid rgba(41,182,246,.12);font-size:.68rem;color:var(--tg);display:flex;align-items:center;gap:6px}
+.tg-bar a{color:var(--tg);text-decoration:underline}
 .fm-list{flex:1;overflow-y:auto;padding:8px}
-.fm-item{padding:10px 12px;border:1px solid transparent;border-radius:8px;margin-bottom:5px;cursor:pointer;transition:all .15s;position:relative}
+.fm-item{padding:10px 12px;border:1px solid transparent;border-radius:8px;margin-bottom:6px;cursor:pointer;transition:all .15s;position:relative}
 .fm-item:hover{background:var(--bg3);border-color:var(--border)}
 .fm-item.active{background:rgba(0,212,255,.06);border-color:rgba(0,212,255,.3)}
 .fm-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cyan);border-radius:3px 0 0 3px}
 .fm-fname{font-size:.78rem;color:var(--cyan);font-weight:600;word-break:break-all;margin-bottom:4px}
 .fm-item.active .fm-fname{text-shadow:0 0 8px var(--cyan)}
-.fm-meta{display:flex;gap:8px;font-size:.63rem;color:var(--dim)}
+.fm-meta{display:flex;gap:8px;font-size:.63rem;color:var(--dim);flex-wrap:wrap;margin-top:3px}
 .fm-size{color:var(--green)}
-.fm-acts{display:flex;gap:5px;margin-top:6px;opacity:0;transition:opacity .15s}
+.fm-acts{display:flex;gap:5px;margin-top:7px;opacity:0;transition:opacity .15s;flex-wrap:wrap}
 .fm-item:hover .fm-acts,.fm-item.active .fm-acts{opacity:1}
 .btn-a{padding:3px 8px;border-radius:4px;font-size:.63rem;font-family:var(--mono);cursor:pointer;border:1px solid;transition:all .15s;text-decoration:none;display:inline-block}
 .ba-prev{background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.3);color:var(--cyan)}
 .ba-tbl{background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.3);color:var(--green)}
 .ba-dl{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.3);color:var(--yellow)}
-.ba-del{background:rgba(255,68,85,.1);border-color:rgba(255,68,85,.3);color:var(--red)}
 .btn-a:hover{filter:brightness(1.3)}
-.fm-dev{padding:12px 14px;border-top:1px solid var(--border);font-size:.7rem;background:var(--bg);border-radius:0 0 12px 12px}
-.fm-dev-row{display:flex;justify-content:space-between;margin-bottom:4px;align-items:center}
-.fm-dk{color:var(--dim)}.fm-dv{font-weight:600}
-.fm-dv.rec{color:var(--red);animation:recblink .8s infinite}
+.fm-dev{padding:10px 14px;border-top:1px solid var(--border);font-size:.7rem;background:var(--bg);border-radius:0 0 12px 12px}
+.fm-dev-row{display:flex;justify-content:space-between;margin-bottom:3px}
+.fm-dk{color:var(--dim)}.fm-dv{font-weight:600}.fm-dv.rec{color:var(--red);animation:recblink .8s infinite}
 .fm-main{background:var(--bg2);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
 .fm-toolbar{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--bg3)}
 .fm-toolbar-title{font-size:.82rem;color:var(--text);font-weight:600;font-family:var(--display);letter-spacing:1px}
-.fm-fi{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--yellow);font-family:var(--mono);font-size:.75rem;width:140px;text-transform:uppercase;transition:border-color .2s}
+.fm-fi{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--yellow);font-family:var(--mono);font-size:.75rem;width:130px;text-transform:uppercase}
 .fm-fi::placeholder{text-transform:none;color:var(--dim)}
 .fm-fi:focus{outline:none;border-color:var(--yellow)}
 .fm-sel{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--dim);font-family:var(--mono);font-size:.72rem}
 .btn-ap{padding:5px 12px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);border-radius:6px;color:var(--yellow);font-size:.72rem;font-family:var(--mono);cursor:pointer;transition:all .2s}
 .btn-ap:hover{background:rgba(255,215,0,.2)}
-.btn-ap.green{background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.3);color:var(--green)}
 .btn-ap.blue{background:rgba(0,212,255,.1);border-color:rgba(0,212,255,.3);color:var(--cyan)}
 .fm-tbl-wrap{flex:1;overflow:auto}
-.fm-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--dim)}
-.fm-statusbar{padding:5px 14px;border-top:1px solid var(--border);display:flex;gap:16px;font-size:.63rem;color:var(--dim);background:var(--bg3)}
+.fm-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--dim);padding:30px;text-align:center}
+.fm-statusbar{padding:5px 14px;border-top:1px solid var(--border);display:flex;gap:16px;font-size:.63rem;color:var(--dim);background:var(--bg3);flex-wrap:wrap}
 .fm-statusbar .val{color:var(--text)}
 
 /* SETTINGS */
@@ -173,29 +168,18 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
 @media(max-width:700px){.settings-grid{grid-template-columns:1fr}}
 .ota-inp{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);font-family:var(--mono);font-size:.8rem;margin-bottom:8px}
 .ota-inp:focus{outline:none;border-color:var(--orange)}
-.btn-ota{padding:9px 20px;background:rgba(255,140,0,.15);border:1px solid rgba(255,140,0,.4);border-radius:6px;color:var(--orange);cursor:pointer;font-family:var(--mono);font-size:.8rem;transition:all .2s}
+.btn-ota{padding:9px 20px;background:rgba(255,140,0,.15);border:1px solid rgba(255,140,0,.4);border-radius:6px;color:var(--orange);cursor:pointer;font-size:.8rem;transition:all .2s}
 .btn-ota:hover{background:rgba(255,140,0,.25)}
 .info-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.78rem}
 .info-row:last-child{border:none}
 .info-key{color:var(--dim)}.info-val{color:var(--cyan);font-family:var(--mono);font-size:.72rem;word-break:break-all;text-align:right}
-
-/* MODAL */
-.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
-.modal-ov.show{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px 32px;max-width:380px;width:90%;text-align:center}
-.modal-title{font-family:var(--display);font-size:1.1rem;color:var(--red);margin-bottom:10px;letter-spacing:2px}
-.modal-file{color:var(--cyan);font-size:.78rem;margin-bottom:20px;word-break:break-all}
-.modal-btns{display:flex;gap:12px;justify-content:center}
-.btn-cancel{padding:8px 20px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--dim);cursor:pointer;font-family:var(--mono);transition:all .2s}
-.btn-cancel:hover{border-color:var(--text);color:var(--text)}
-.btn-confirm{padding:8px 20px;background:rgba(255,68,85,.15);border:1px solid rgba(255,68,85,.4);border-radius:6px;color:var(--red);cursor:pointer;font-family:var(--mono);transition:all .2s}
-.btn-confirm:hover{background:rgba(255,68,85,.3)}
 
 /* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:8px;font-size:.78rem;opacity:0;pointer-events:none;transition:all .3s;z-index:999;transform:translateY(8px)}
 .toast.show{opacity:1;transform:translateY(0)}
 .toast.ok{background:#0d2a1e;border:1px solid #00ff8844;color:var(--green)}
 .toast.err{background:#2a0d0d;border:1px solid #ff445544;color:var(--red)}
+.toast.info{background:#0a1e2a;border:1px solid #00d4ff44;color:var(--cyan)}
 
 /* LOADER */
 .loader{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
@@ -212,15 +196,16 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
   <div class="divider-v"></div>
   <div class="brand-tag">
     <span style="color:var(--cyan)">Adi Sanggoro</span>
-    <span class="x-sep">✕</span>
+    <span class="xs">✕</span>
     <span style="color:var(--yellow)">Setrum Engineering</span>
   </div>
+  <div class="divider-v"></div>
   <div class="status-row"><div class="dot" id="fbDot"></div><span id="fbLabel">Firebase...</span></div>
   <div class="topbar-right">
-    <input class="esp-ip" type="text" id="espIp" placeholder="IP ESP32" title="IP untuk File Manager">
-    <button class="btn-connect" onclick="connectESP()">CONNECT</button>
     <div class="status-row"><div class="dot" id="espDot"></div><span id="espLabel">ESP32</span></div>
-    <span style="font-size:.68rem;color:var(--dim)" id="lastUpdate">-</span>
+    <input class="esp-ip" type="text" id="espIp" placeholder="192.168.x.x">
+    <button class="btn-connect" onclick="connectESP()">CONNECT</button>
+    <span style="font-size:.65rem;color:var(--dim)" id="lastUpdate">-</span>
   </div>
 </div>
 
@@ -232,31 +217,32 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
   <button class="tab-btn" onclick="switchTab('settings')" id="tab-settings">⚙️ SETTINGS</button>
 </div>
 
-<!-- ══ TAB LIVE ══ -->
+<!-- TAB LIVE -->
 <div class="tab-content active" id="content-live">
   <div class="grid-2">
     <div>
       <div class="stats">
         <div class="stat-badge"><div class="sv" id="statMsg">0</div><div class="sl">Total MSG</div></div>
         <div class="stat-badge"><div class="sv" id="statMark">0</div><div class="sl">Markers</div></div>
-        <div class="stat-badge"><div class="sv" id="statMode" style="font-size:.95rem;color:var(--yellow)">MONITOR</div><div class="sl">Mode ESP32</div></div>
+        <div class="stat-badge"><div class="sv" id="statMode" style="font-size:.9rem;color:var(--yellow)">MONITOR</div><div class="sl">Mode ESP32</div></div>
       </div>
-
       <div class="card">
-        <div class="card-title"><div class="ct-left"><span>📡</span> Frame CAN Terbaru</div></div>
+        <div class="card-title">
+          <div class="ct-left"><span>📡</span> Frame CAN Terbaru</div>
+          <span id="recInd" style="display:none;color:var(--red);font-size:.7rem;animation:recblink .8s infinite">● REC</span>
+        </div>
         <div class="live-frame">
-          <div class="live-row"><span class="live-label">CAN ID</span><span class="live-val" id="liveId">--</span><span id="liveTags" style="margin-left:auto"></span></div>
+          <div class="live-row"><span class="live-label">CAN ID</span><span class="live-val" id="liveId">--</span><span id="liveTags" style="margin-left:auto;display:flex;gap:4px"></span></div>
           <div class="live-row"><span class="live-label">DLC</span><span class="live-val" id="liveDlc">--</span></div>
-          <div class="live-row"><span class="live-label">Timestamp</span><span class="live-val" id="liveTs">--</span></div>
-          <div style="margin-top:8px;font-size:.63rem;color:var(--dim);margin-bottom:4px">DATA BYTES</div>
+          <div class="live-row"><span class="live-label">Timestamp</span><span class="live-val" id="liveTs" style="color:var(--dim)">--</span></div>
+          <div style="margin-top:8px;font-size:.6rem;color:var(--dim);margin-bottom:4px;letter-spacing:1px">DATA BYTES</div>
           <div class="byte-grid" id="byteGrid"></div>
         </div>
       </div>
-
       <div class="card">
         <div class="card-title">
           <div class="ct-left"><span>📋</span> Riwayat Frame</div>
-          <button onclick="clearLiveTable()" style="background:none;border:1px solid var(--border);color:var(--dim);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:.65rem;font-family:var(--mono)">Bersihkan</button>
+          <button onclick="clearLiveTable()" style="background:none;border:1px solid var(--border);color:var(--dim);padding:3px 10px;border-radius:4px;cursor:pointer;font-size:.65rem">Bersihkan</button>
         </div>
         <div class="tbl-mode-bar">
           <div class="tbl-pill live active" id="pillLive" onclick="setTblMode('live')">🔴 LIVE</div>
@@ -266,7 +252,7 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
         <div class="tbl-wrap">
           <table>
             <thead><tr><th>Timestamp</th><th>CAN ID</th><th>DLC</th><th>Data (HEX)</th><th>Flag</th></tr></thead>
-            <tbody id="canTableBody"><tr><td colspan="5" style="text-align:center;color:var(--dim);padding:20px">Menunggu data...</td></tr></tbody>
+            <tbody id="canTableBody"><tr><td colspan="5" style="text-align:center;color:var(--dim);padding:20px">Menunggu data Firebase...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -280,7 +266,7 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
   </div>
 </div>
 
-<!-- ══ TAB ANALISIS ══ -->
+<!-- TAB ANALISIS -->
 <div class="tab-content" id="content-analisis">
   <div class="grid-2">
     <div>
@@ -299,30 +285,41 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
       </div>
       <div class="card">
         <div class="card-title"><div class="ct-left"><span>💡</span> Cara Pakai</div></div>
-        <div style="font-size:.75rem;color:var(--dim);line-height:2">
-          <div>1. Isi CAN ID target di slot (1-4)</div>
-          <div>2. Tentukan byte index yang dipantau</div>
+        <div style="font-size:.75rem;color:var(--dim);line-height:2.1">
+          <div>1. Isi CAN ID target di slot (1–4)</div>
+          <div>2. Tentukan byte index (0–7)</div>
           <div>3. Aktifkan slot dengan toggle</div>
-          <div>4. Klik <span style="color:var(--cyan)">Simpan & Kirim ke ESP32</span></div>
+          <div>4. Klik <span style="color:var(--cyan)">Simpan &amp; Kirim ke ESP32</span></div>
           <div>5. Ubah mode ke <span style="color:var(--yellow)">Analisis</span></div>
+          <div>6. Nilai HEX &amp; DEC update realtime</div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══ TAB FILES ══ -->
+<!-- TAB FILES -->
 <div class="tab-content" id="content-files">
   <div class="grid-full">
     <div class="fm-layout">
-      <!-- Sidebar -->
       <div class="fm-side">
         <div class="fm-side-hdr">
-          <span class="fm-side-title">SD FILES</span>
+          <div>
+            <div class="fm-side-title">SESSION FILES</div>
+            <div class="fm-tg-badge">📨 Telegram Bot</div>
+          </div>
           <button class="btn-icon" onclick="loadFiles()">↻ Refresh</button>
         </div>
+        <div class="tg-bar">
+          <span>📨</span>
+          <span>File CSV otomatis masuk ke Telegram setelah sesi selesai.
+            <a href="https://t.me/tama_ota_bot" target="_blank">Buka Bot ↗</a>
+          </span>
+        </div>
         <div class="fm-list" id="fmList">
-          <div style="color:var(--dim);font-size:.75rem;text-align:center;padding:30px 10px">Hubungkan ESP32 dulu<br>via tombol CONNECT</div>
+          <div style="text-align:center;padding:30px;color:var(--dim);font-size:.75rem">
+            Klik <b style="color:var(--cyan)">↻ Refresh</b><br>untuk load file dari Telegram
+          </div>
         </div>
         <div class="fm-dev" id="fmDev" style="display:none">
           <div class="fm-dev-row"><span class="fm-dk">Status</span><span class="fm-dv" id="fmStatus">-</span></div>
@@ -331,7 +328,7 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
           <div class="fm-dev-row"><span class="fm-dk">Marker</span><span class="fm-dv" id="fmMarkers">-</span></div>
         </div>
       </div>
-      <!-- Preview panel -->
+
       <div class="fm-main">
         <div class="fm-toolbar">
           <span class="fm-toolbar-title" id="fmTitle">Pilih file dari sidebar</span>
@@ -344,8 +341,8 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
               <option value="9999">Semua</option>
             </select>
             <button class="btn-ap" onclick="applyFilter()">▶ Filter</button>
-            <button class="btn-ap blue" onclick="loadToLiveTable()">📋 Ke Tabel Live</button>
-            <button class="btn-ap" style="background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.3);color:var(--yellow)" onclick="dlCurrentFile()">⬇ Download</button>
+            <button class="btn-ap blue" onclick="loadToLiveTable()">📋 Ke Tabel</button>
+            <button class="btn-ap" onclick="dlCurrentFile()">⬇ Download</button>
           </div>
         </div>
         <div id="fmTblWrap" class="fm-tbl-wrap" style="display:none">
@@ -355,12 +352,14 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
           </table>
         </div>
         <div class="fm-empty" id="fmEmpty" style="display:flex">
-          <div style="font-size:2.5rem;opacity:.3">📁</div>
-          <div style="font-size:.8rem">Pilih file untuk preview</div>
+          <div style="font-size:3rem;opacity:.2">📁</div>
+          <div style="font-size:.82rem">Pilih file untuk preview CSV</div>
+          <div style="font-size:.7rem;color:var(--dim)">File diambil langsung dari Telegram Bot</div>
         </div>
         <div class="fm-statusbar">
           <span>Baris: <span class="val" id="fmRows">-</span></span>
           <span>Filter: <span class="val" id="fmFilterSt">Semua</span></span>
+          <span>Sumber: <span class="val" style="color:var(--tg)">Telegram</span></span>
           <span>File: <span class="val" id="fmActiveFile">-</span></span>
         </div>
       </div>
@@ -368,56 +367,60 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
   </div>
 </div>
 
-<!-- ══ TAB SETTINGS ══ -->
+<!-- TAB SETTINGS -->
 <div class="tab-content" id="content-settings">
   <div class="grid-full">
     <div class="settings-grid">
       <div class="card">
         <div class="card-title"><div class="ct-left"><span>🚀</span> OTA Firmware Update</div></div>
-        <div style="font-size:.75rem;color:var(--dim);margin-bottom:10px">URL file .bin untuk update firmware ESP32</div>
+        <div style="font-size:.75rem;color:var(--dim);margin-bottom:10px">URL file .bin untuk update firmware ESP32 via Firebase</div>
         <input class="ota-inp" type="text" id="otaUrl" placeholder="https://example.com/firmware.bin">
         <button class="btn-ota" onclick="triggerOTA()">🚀 Kirim OTA ke ESP32</button>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="ct-left"><span>📨</span> Telegram Bot</div></div>
+        <div class="info-row"><span class="info-key">Bot</span><span class="info-val">@tama_ota_bot</span></div>
+        <div class="info-row"><span class="info-key">Chat ID</span><span class="info-val">5076353739</span></div>
+        <div class="info-row"><span class="info-key">Trigger</span><span class="info-val">Auto setelah stop sesi</span></div>
+        <div style="margin-top:12px">
+          <a href="https://t.me/tama_ota_bot" target="_blank" style="display:inline-block;padding:7px 16px;background:rgba(41,182,246,.15);border:1px solid rgba(41,182,246,.4);border-radius:6px;color:var(--tg);font-size:.78rem;text-decoration:none">📨 Buka Telegram Bot</a>
+        </div>
       </div>
       <div class="card">
         <div class="card-title"><div class="ct-left"><span>🔥</span> Firebase Config</div></div>
         <div class="info-row"><span class="info-key">Project</span><span class="info-val" id="iProject">-</span></div>
         <div class="info-row"><span class="info-key">Auth</span><span class="info-val" id="iAuth">-</span></div>
-        <div class="info-row"><span class="info-key">Database</span><span class="info-val" id="iDb" style="font-size:.62rem">-</span></div>
+        <div class="info-row"><span class="info-key">Database</span><span class="info-val" id="iDb" style="font-size:.6rem">-</span></div>
       </div>
       <div class="card">
         <div class="card-title"><div class="ct-left"><span>🗂</span> Struktur Database</div></div>
         <div style="font-size:.72rem;font-family:var(--mono);color:var(--dim);line-height:2">
-          <div style="color:var(--cyan)">/analysis/mode</div><div style="padding-left:14px">"monitor" | "analisis"</div>
-          <div style="color:var(--cyan)">/analysis/targets/0..3</div><div style="padding-left:14px">active, can_id, label, byte_index</div>
-          <div style="color:var(--cyan)">/live/latest</div><div style="padding-left:14px">frame CAN terbaru</div>
+          <div style="color:var(--cyan)">/analysis/mode</div><div style="padding-left:14px;margin-bottom:2px">"monitor" | "analisis"</div>
+          <div style="color:var(--cyan)">/analysis/targets/0..3</div><div style="padding-left:14px;margin-bottom:2px">active, can_id, label, byte_index</div>
+          <div style="color:var(--cyan)">/live/latest</div><div style="padding-left:14px;margin-bottom:2px">frame CAN realtime</div>
           <div style="color:var(--red)">/ota/url</div><div style="padding-left:14px">trigger OTA firmware</div>
         </div>
       </div>
       <div class="card">
-        <div class="card-title"><div class="ct-left"><span>📡</span> ESP32 Web Server</div></div>
+        <div class="card-title"><div class="ct-left"><span>📡</span> ESP32 WebServer (Opsional)</div></div>
+        <div style="font-size:.72rem;color:var(--dim);margin-bottom:8px">Hanya jika HP dan ESP32 satu WiFi</div>
         <div class="info-row"><span class="info-key">IP</span><span class="info-val" id="iEspIp" style="color:var(--green)">Belum terhubung</span></div>
         <div class="info-row"><span class="info-key">Status</span><span class="info-val" id="iEspSt">-</span></div>
-        <div style="margin-top:10px;font-size:.72rem;color:var(--dim);line-height:1.9">
-          <div><span style="color:var(--green)">GET</span> /api/files — list file SD</div>
-          <div><span style="color:var(--green)">GET</span> /api/preview?f=...&filter=...</div>
-          <div><span style="color:var(--green)">GET</span> /download?f=... — download CSV</div>
-          <div><span style="color:var(--green)">GET</span> /api/delete?f=... — hapus file</div>
-          <div><span style="color:var(--green)">GET</span> /api/status — status alat</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="ct-left"><span>ℹ️</span> Tentang</div></div>
+        <div style="font-size:.75rem;color:var(--dim);line-height:2.1">
+          <div>Versi: <span style="color:var(--cyan)">v2.0 — Telegram Edition</span></div>
+          <div>Device: <span style="color:var(--yellow)">TAMA_OTA</span></div>
+          <div>Hardware: <span style="color:var(--text)">ESP32 + TJA1050</span></div>
+          <div>Cloud: <span style="color:var(--text)">Firebase RTDB + Telegram Bot</span></div>
+          <div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+            <span style="color:var(--cyan)">Adi Sanggoro</span>
+            <span style="color:var(--yellow)"> ✕ </span>
+            <span style="color:var(--yellow)">Setrum Engineering</span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- DELETE MODAL -->
-<div class="modal-ov" id="delModal">
-  <div class="modal">
-    <div class="modal-title">🗑 HAPUS FILE</div>
-    <div class="modal-file" id="delFileName"></div>
-    <div style="font-size:.75rem;color:var(--dim);margin-bottom:20px">File dihapus permanen dari SD card. Tidak dapat dibatalkan.</div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeDelModal()">Batal</button>
-      <button class="btn-confirm" onclick="confirmDelete()">Hapus</button>
     </div>
   </div>
 </div>
@@ -425,82 +428,74 @@ tr.row-mrk td{background:rgba(255,215,0,.03)}
 <div class="toast" id="toast"></div>
 
 <script>
-// ── GOOGLE DRIVE CONFIG ───────────────────────────────────────
-// File CSV di-upload ESP32 ke Drive → bisa diakses dari HP manapun
-const GDRIVE_FOLDER_ID = "1BD36M9yPYP87TtL_IZiqomm2paeMvUqZ";
-const GDRIVE_BASE      = "https://www.googleapis.com/drive/v3";
-let   gdriveToken      = "";   // cache Firebase ID token
+// ── CONFIG ───────────────────────────────────────────────────────
+const TG_TOKEN   = '8624554809:AAEgtx4DO2wkmZJ5jph7MWgQM1vlEuxNQXw';
+const TG_CHAT_ID = '5076353739';
+const TG_API     = 'https://api.telegram.org/bot' + TG_TOKEN;
 
-// ── FIREBASE CONFIG ───────────────────────────────────────────
 const firebaseConfig = {
-  apiKey:"AIzaSyBP8CJdFRSWI0l3Cz6t2nGP_EJTepc9ImY",
-  authDomain:"can-sniffer-58006.firebaseapp.com",
-  databaseURL:"https://can-sniffer-58006-default-rtdb.firebaseio.com",
-  projectId:"can-sniffer-58006",
-  storageBucket:"can-sniffer-58006.firebasestorage.app",
-  messagingSenderId:"1045166982395",
-  appId:"1:1045166982395:web:c8451a68bfb75daddf1c5e"
+  apiKey:'AIzaSyBP8CJdFRSWI0l3Cz6t2nGP_EJTepc9ImY',
+  authDomain:'can-sniffer-58006.firebaseapp.com',
+  databaseURL:'https://can-sniffer-58006-default-rtdb.firebaseio.com',
+  projectId:'can-sniffer-58006',
+  storageBucket:'can-sniffer-58006.firebasestorage.app',
+  messagingSenderId:'1045166982395',
+  appId:'1:1045166982395:web:c8451a68bfb75daddf1c5e'
 };
-const app=firebase.initializeApp(firebaseConfig);
-const db=firebase.database();
-const auth_fb=firebase.auth();
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const auth_fb = firebase.auth();
 
-// ── STATE ─────────────────────────────────────────────────────
-let currentMode='monitor',msgCount=0,markerCount=0;
-let liveRows=[],MAX_LIVE=100,prevBytes=Array(8).fill(null);
-let tblMode='live',csvFname='';
+// ── STATE ─────────────────────────────────────────────────────────
+let currentMode='monitor', msgCount=0, markerCount=0;
+let liveRows=[], MAX_LIVE=150, prevBytes=Array(8).fill(null);
+let tblMode='live', csvFname='';
 let slots=Array.from({length:4},()=>({active:false,can_id:'',label:'',byte_index:0,hexVal:'--',decVal:'--'}));
 const SLOT_COLORS=['#00d4ff','#00ff88','#ffd700','#ff8c00'];
-let espBase='',fmFiles=[],fmActive='',fmActiveId='',delTarget='',espTimer=null;
-const IDX={timestamp_ms:0,can_id_hex:1,dlc:2,data_hex:3,is_extended:4,is_rtr:5,is_marker:6,marker_label:7};
+let espBase='', espTimer=null;
+let fmFiles=[], fmActive='', fmActiveUrl='', fmActiveName='';
 
-// ── TAB ───────────────────────────────────────────────────────
-function switchTab(n){
+// ── TAB ───────────────────────────────────────────────────────────
+function switchTab(n) {
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('tab-'+n).classList.add('active');
   document.getElementById('content-'+n).classList.add('active');
+  if (n==='files' && !fmFiles.length) loadFiles();
 }
 
-// ── FIREBASE AUTH ─────────────────────────────────────────────
-// Pakai onAuthStateChanged agar lebih reliable
+// ── FIREBASE AUTH ─────────────────────────────────────────────────
 auth_fb.onAuthStateChanged(user=>{
-  if(user){
+  if (user) {
     setDot('fbDot','fbLabel',true,'Firebase OK');
     startListeners(); loadSlots();
-    setTimeout(()=>loadFiles(), 1500);
-    document.getElementById('iProject').textContent=firebaseConfig.projectId;
-    document.getElementById('iAuth').textContent=user.email||'OK';
-    document.getElementById('iDb').textContent=firebaseConfig.databaseURL;
+    document.getElementById('iProject').textContent = firebaseConfig.projectId;
+    document.getElementById('iAuth').textContent    = user.email||'OK';
+    document.getElementById('iDb').textContent      = firebaseConfig.databaseURL;
   } else {
-    // Belum login — coba login
-    auth_fb.signInWithEmailAndPassword("cansniffer@gmail.com","cansniffer123")
-      .catch(e=>{
-        console.error("[Firebase] Auth error:", e.code, e.message);
-        setDot('fbDot','fbLabel',false,'Firebase Gagal: '+e.code);
-      });
+    auth_fb.signInWithEmailAndPassword('cansniffer@gmail.com','cansniffer123')
+      .catch(e=>{ setDot('fbDot','fbLabel',false,'Auth Gagal'); console.error('[FB]',e.code); });
   }
 });
 
-function setDot(dotId,lblId,ok,label){
-  document.getElementById(dotId).className='dot '+(ok?'online':'offline');
-  document.getElementById(lblId).textContent=label;
+function setDot(dId,lId,ok,label) {
+  document.getElementById(dId).className = 'dot '+(ok?'online':'offline');
+  document.getElementById(lId).textContent = label;
 }
 
-// ── FIREBASE LISTENERS ────────────────────────────────────────
-function startListeners(){
-  db.ref('/live/latest').on('value',snap=>{
-    const d=snap.val(); if(!d)return;
-    msgCount++;
-    updateLiveFrame(d);
-    if(tblMode==='live')addLiveRow(d);
+// ── FIREBASE LISTENERS ────────────────────────────────────────────
+function startListeners() {
+  db.ref('/live/latest').on('value', snap=>{
+    const d=snap.val(); if(!d) return;
+    msgCount++; updateLiveFrame(d);
+    if (tblMode==='live') addLiveRow(d);
     updateStats();
-    document.getElementById('lastUpdate').textContent=new Date().toLocaleTimeString('id-ID');
-    const inId=d.id?d.id.toUpperCase():'';
+    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('id-ID');
+    const inId=(d.id||'').toUpperCase();
     slots.forEach((s,i)=>{
-      if(s.active&&s.can_id.toUpperCase()===inId){
-        const bytes=parseHex(d.data),bi=parseInt(s.byte_index)||0;
-        if(bytes.length>bi){
+      if (s.active && s.can_id.toUpperCase()===inId) {
+        const bytes=parseHex(d.data), bi=parseInt(s.byte_index)||0;
+        if (bytes.length>bi) {
           s.hexVal='0x'+bytes[bi].toString(16).padStart(2,'0').toUpperCase();
           s.decVal=String(bytes[bi]);
           updateSlotResult(i);
@@ -508,158 +503,130 @@ function startListeners(){
       }
     });
   });
-  db.ref('/markers').on('value',snap=>{
-    const d=snap.val();
-    markerCount=d?Object.keys(d).length:0;
-    updateStats();renderMarkers(d);
+  db.ref('/markers').on('value', snap=>{
+    const d=snap.val(); markerCount=d?Object.keys(d).length:0;
+    updateStats(); renderMarkers(d);
   });
-  db.ref('/analysis/mode').on('value',snap=>{
-    const m=snap.val()||'monitor';
-    currentMode=m;updateModeUI();
+  db.ref('/analysis/mode').on('value', snap=>{
+    const m=snap.val()||'monitor'; currentMode=m; updateModeUI();
     document.getElementById('statMode').textContent=m.toUpperCase();
+  });
+  db.ref('/live/recording').on('value', snap=>{
+    document.getElementById('recInd').style.display = snap.val()?'inline':'none';
   });
 }
 
-// ── LIVE FRAME ────────────────────────────────────────────────
-function updateLiveFrame(d){
+// ── LIVE FRAME ────────────────────────────────────────────────────
+function updateLiveFrame(d) {
   const mk=d.marker;
-  document.getElementById('liveId').textContent=d.id||'--';
-  document.getElementById('liveId').className='live-val'+(mk?' marker':'');
-  document.getElementById('liveDlc').textContent=d.dlc??'--';
-  document.getElementById('liveTs').textContent=d.ts?d.ts+' ms':'--';
+  document.getElementById('liveId').textContent  = d.id||'--';
+  document.getElementById('liveId').className    = 'live-val'+(mk?' marker':'');
+  document.getElementById('liveDlc').textContent = d.dlc!=null?d.dlc:'--';
+  document.getElementById('liveTs').textContent  = d.ts?d.ts+' ms':'--';
   let tags='';
-  if(d.ext)tags+='<span class="tag ext">EXT</span> ';
-  if(d.rtr)tags+='<span class="tag rtr">RTR</span> ';
-  if(mk)tags+='<span class="tag mark">MRK</span>';
+  if(d.ext) tags+='<span class="tag ext">EXT</span>';
+  if(d.rtr) tags+='<span class="tag rtr">RTR</span>';
+  if(mk)    tags+='<span class="tag mark">MRK</span>';
   document.getElementById('liveTags').innerHTML=tags;
-  const bytes=parseHex(d.data),dlc=d.dlc||0,grid=document.getElementById('byteGrid');
+  const bytes=parseHex(d.data), dlc=d.dlc||0;
+  const grid=document.getElementById('byteGrid');
   grid.innerHTML='';
   for(let i=0;i<8;i++){
-    const b=document.createElement('div');b.className='byte-box';
-    if(i<dlc){const v=bytes[i]??0;if(prevBytes[i]!==v)b.classList.add('changed');
-      b.innerHTML=`<span class="bidx">B${i}</span><span class="bval">${v.toString(16).padStart(2,'0').toUpperCase()}</span>`;prevBytes[i]=v;
-    }else b.innerHTML=`<span class="bidx">B${i}</span><span class="bval" style="color:var(--border)">--</span>`;
+    const b=document.createElement('div'); b.className='byte-box';
+    if(i<dlc){
+      const v=bytes[i]??0;
+      if(prevBytes[i]!==v) b.classList.add('changed');
+      b.innerHTML='<span class="bidx">B'+i+'</span><span class="bval">'+v.toString(16).padStart(2,'0').toUpperCase()+'</span>';
+      prevBytes[i]=v;
+    } else {
+      b.innerHTML='<span class="bidx">B'+i+'</span><span class="bval" style="color:var(--border)">--</span>';
+    }
     grid.appendChild(b);
   }
 }
 
-// ── TABLE DUAL MODE ───────────────────────────────────────────
-function setTblMode(m){
+function addLiveRow(d) {
+  const tbody=document.getElementById('canTableBody');
+  if(tbody.querySelector('td[colspan]')) tbody.innerHTML='';
+  const mk=d.marker;
+  const flag=mk?'<span class="tag mark">MRK</span>':d.ext?'<span class="tag ext">EXT</span>':d.rtr?'<span class="tag rtr">RTR</span>':'<span style="color:var(--dim);font-size:.62rem">STD</span>';
+  const tr=document.createElement('tr'); if(mk) tr.className='row-mrk';
+  tr.innerHTML='<td class="td-ts">'+(d.ts||'--')+'</td><td class="td-id '+(mk?'td-mrk':'')+'">'+(d.id||'--')+'</td><td>'+(d.dlc!=null?d.dlc:'--')+'</td><td class="td-data">'+(d.data||'')+'</td><td>'+flag+'</td>';
+  tbody.insertBefore(tr,tbody.firstChild); liveRows.push(tr);
+  if(liveRows.length>MAX_LIVE) tbody.removeChild(liveRows.shift());
+}
+
+function setTblMode(m) {
   tblMode=m;
   document.getElementById('pillLive').classList.toggle('active',m==='live');
   document.getElementById('pillCsv').classList.toggle('active',m==='csv');
-  document.getElementById('tblFname').style.display=m==='csv'&&csvFname?'block':'none';
-  if(m==='live')clearLiveTable();
+  document.getElementById('tblFname').style.display=(m==='csv'&&csvFname)?'block':'none';
+  if(m==='live') clearLiveTable();
 }
 
-function addLiveRow(d){
-  const tbody=document.getElementById('canTableBody');
-  if(tbody.querySelector('td[colspan]'))tbody.innerHTML='';
-  const mk=d.marker;
-  const flag=mk?'<span class="tag mark">MRK</span>':d.ext?'<span class="tag ext">EXT</span>':d.rtr?'<span class="tag rtr">RTR</span>':'<span style="color:var(--dim);font-size:.65rem">STD</span>';
-  const tr=document.createElement('tr');
-  if(mk)tr.className='row-mrk';
-  tr.innerHTML=`<td class="td-ts">${d.ts||'--'}</td><td class="td-id ${mk?'td-mrk':''}">${d.id||'--'}</td><td>${d.dlc??'--'}</td><td class="td-data">${d.data||''}</td><td>${flag}</td>`;
-  tbody.insertBefore(tr,tbody.firstChild);
-  liveRows.push(tr);
-  if(liveRows.length>MAX_LIVE)tbody.removeChild(liveRows.shift());
-}
-
-function clearLiveTable(){
+function clearLiveTable() {
   document.getElementById('canTableBody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--dim);padding:20px">Menunggu data...</td></tr>';
-  liveRows=[];msgCount=0;updateStats();
+  liveRows=[]; msgCount=0; updateStats();
 }
 
-function loadToLiveTable(){
-  if(!fmActive||!espBase){showToast('Pilih file CSV dulu','err');return;}
-  const filter=document.getElementById('fmFilter').value.trim().toUpperCase();
-  const limit=document.getElementById('fmLimit').value;
-  let url=`/api/preview?f=${fmActive}&limit=${limit}`;
-  if(filter)url+=`&filter=${filter}`;
-  fetchESP(url,15000).then(data=>{
-    const tbody=document.getElementById('canTableBody');
-    tbody.innerHTML='';liveRows=[];
-    if(!data.rows||!data.rows.length){
-      tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--dim);padding:20px">Tidak ada data</td></tr>';return;
-    }
-    const cols=data.columns,idx={};cols.forEach((c,i)=>idx[c]=i);
-    data.rows.forEach(row=>{
-      const mk=row[idx['is_marker']]==='1',ex=row[idx['is_extended']]==='1',rt=row[idx['is_rtr']]==='1';
-      const flag=mk?'<span class="tag mark">MRK</span>':ex?'<span class="tag ext">EXT</span>':rt?'<span class="tag rtr">RTR</span>':'<span style="color:var(--dim);font-size:.65rem">STD</span>';
-      const tr=document.createElement('tr');
-      if(mk)tr.className='row-mrk';
-      tr.innerHTML=`<td class="td-ts">${row[idx['timestamp_ms']]||''}</td><td class="td-id ${mk?'td-mrk':''}">${row[idx['can_id_hex']]||''}</td><td>${row[idx['dlc']]||''}</td><td class="td-data">${row[idx['data_hex']]||''}</td><td>${flag}</td>`;
-      tbody.appendChild(tr);liveRows.push(tr);
-    });
-    csvFname=fmActive;
-    document.getElementById('tblFname').textContent='📄 '+fmActive;
-    setTblMode('csv');
-    switchTab('live');
-    showToast('✅ '+data.total+' baris dimuat ke tabel');
-  }).catch(e=>showToast('❌ '+e.message,'err'));
-}
-
-// ── STATS & MARKERS ───────────────────────────────────────────
-function updateStats(){
+function updateStats() {
   document.getElementById('statMsg').textContent=msgCount;
   document.getElementById('statMark').textContent=markerCount;
 }
-function renderMarkers(data){
+
+function renderMarkers(data) {
   const el=document.getElementById('markerList');
   if(!data){el.innerHTML='<p style="color:var(--dim);font-size:.78rem">Belum ada marker.</p>';return;}
   const keys=Object.keys(data).sort((a,b)=>parseInt(b)-parseInt(a));
   el.innerHTML=keys.slice(0,20).map(k=>{
     const m=data[k];
-    return`<div class="marker-item"><span class="marker-num">#${parseInt(k)+1}</span><span style="color:var(--yellow)">${m.mlabel||'MARK'}</span><span style="color:var(--dim);font-size:.7rem;margin-left:auto">${m.ts||'--'} ms</span></div>`;
+    return '<div class="marker-item"><span class="marker-num">#'+(parseInt(k)+1)+'</span><span style="color:var(--yellow)">'+(m.mlabel||'MARK')+'</span><span style="color:var(--dim);font-size:.7rem;margin-left:auto">'+(m.ts||'--')+' ms</span></div>';
   }).join('');
 }
 
-// ── ANALISIS ──────────────────────────────────────────────────
-function setMode(m){
-  currentMode=m;
-  db.ref('/analysis/mode').set(m);
-  updateModeUI();
-  showToast('Mode → '+m.toUpperCase());
-}
+// ── ANALISIS ──────────────────────────────────────────────────────
+function setMode(m){ currentMode=m; db.ref('/analysis/mode').set(m); updateModeUI(); showToast('Mode → '+m.toUpperCase()); }
 function updateModeUI(){
   document.getElementById('btnMonitor').classList.toggle('active',currentMode==='monitor');
   document.getElementById('btnAnalisis').classList.toggle('active',currentMode==='analisis');
 }
+
 function renderSlots(){
-  const c=document.getElementById('targetSlots');c.innerHTML='';
+  const c=document.getElementById('targetSlots'); c.innerHTML='';
   slots.forEach((slot,i)=>{
-    const color=SLOT_COLORS[i],div=document.createElement('div');
+    const col=SLOT_COLORS[i], div=document.createElement('div');
     div.className='target-slot'+(slot.active?' active-slot':'');
-    div.style.borderColor=slot.active?color+'44':'';
-    div.innerHTML=`
-      <div class="slot-header">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div class="slot-num" style="background:${color}22;border:1px solid ${color}55;color:${color}">${i+1}</div>
-          <span style="font-size:.78rem;color:${slot.active?color:'var(--dim)'}">${slot.active?(slot.label||'ID: '+slot.can_id):'Slot '+(i+1)+' (kosong)'}</span>
-        </div>
-        <div class="slot-toggle ${slot.active?'on':''}" onclick="toggleSlot(${i})"></div>
-      </div>
-      <div style="${slot.active?'':'opacity:.4;pointer-events:none'}">
-        <input class="inp" type="text" id="s${i}_id" placeholder="CAN ID hex" value="${slot.can_id}">
-        <input class="inp" type="text" id="s${i}_label" placeholder="Label (Arus, Kecepatan...)" value="${slot.label}">
-        <div class="inp-row">
-          <input class="inp" type="number" id="s${i}_byte" placeholder="Byte 0-7" value="${slot.byte_index}" min="0" max="7" style="width:110px">
-          <span style="color:var(--dim);font-size:.7rem;align-self:center;padding-left:6px">dari 8 byte data</span>
-        </div>
-        <div class="slot-result">
-          <div class="result-box"><div class="rlabel">HEX</div><div class="rval" id="s${i}_hex" style="color:var(--cyan)">${slot.hexVal}</div></div>
-          <div class="result-box"><div class="rlabel">DEC</div><div class="rval" id="s${i}_dec" style="color:var(--green)">${slot.decVal}</div></div>
-        </div>
-        <button class="btn-save" onclick="saveSlot(${i})" style="border-color:${color}44;color:${color};background:${color}12">💾 Simpan & Kirim ke ESP32</button>
-      </div>`;
+    div.style.borderColor=slot.active?col+'44':'';
+    div.innerHTML=
+      '<div class="slot-header">'+
+        '<div style="display:flex;align-items:center;gap:8px">'+
+          '<div class="slot-num" style="background:'+col+'22;border:1px solid '+col+'55;color:'+col+'">'+(i+1)+'</div>'+
+          '<span style="font-size:.78rem;color:'+(slot.active?col:'var(--dim)')+'">'+
+            (slot.active?(slot.label||'ID: '+slot.can_id):'Slot '+(i+1)+' (kosong)')+
+          '</span>'+
+        '</div>'+
+        '<div class="slot-toggle '+(slot.active?'on':'')+'" onclick="toggleSlot('+i+')"></div>'+
+      '</div>'+
+      '<div style="'+(slot.active?'':'opacity:.4;pointer-events:none')+'">'+
+        '<input class="inp" type="text" id="s'+i+'_id" placeholder="CAN ID hex" value="'+slot.can_id+'">'+
+        '<input class="inp" type="text" id="s'+i+'_label" placeholder="Label (Arus, Kecepatan...)" value="'+slot.label+'">'+
+        '<div class="inp-row"><input class="inp" type="number" id="s'+i+'_byte" placeholder="Byte 0-7" value="'+slot.byte_index+'" min="0" max="7" style="width:110px"><span style="color:var(--dim);font-size:.7rem;align-self:center;padding-left:6px">dari 8 byte</span></div>'+
+        '<div class="slot-result">'+
+          '<div class="result-box"><div class="rlabel">HEX</div><div class="rval" id="s'+i+'_hex" style="color:var(--cyan)">'+slot.hexVal+'</div></div>'+
+          '<div class="result-box"><div class="rlabel">DEC</div><div class="rval" id="s'+i+'_dec" style="color:var(--green)">'+slot.decVal+'</div></div>'+
+        '</div>'+
+        '<button class="btn-save" onclick="saveSlot('+i+')" style="border-color:'+col+'44;color:'+col+';background:'+col+'12">💾 Simpan &amp; Kirim ke ESP32</button>'+
+      '</div>';
     c.appendChild(div);
   });
 }
+
 function updateSlotResult(i){
   const h=document.getElementById('s'+i+'_hex'),d=document.getElementById('s'+i+'_dec');
-  if(h)h.textContent=slots[i].hexVal;if(d)d.textContent=slots[i].decVal;
+  if(h)h.textContent=slots[i].hexVal; if(d)d.textContent=slots[i].decVal;
 }
 function toggleSlot(i){slots[i].active=!slots[i].active;renderSlots();}
+
 function saveSlot(i){
   const can_id=document.getElementById('s'+i+'_id').value.trim().toUpperCase();
   const label=document.getElementById('s'+i+'_label').value.trim();
@@ -670,54 +637,45 @@ function saveSlot(i){
     .then(()=>{showToast('✅ Slot '+(i+1)+' tersimpan!');renderSlots();})
     .catch(e=>showToast('❌ '+e.message,'err'));
 }
+
 function loadSlots(){
   db.ref('/analysis/targets').once('value',snap=>{
     const d=snap.val();
     if(d)Object.keys(d).forEach(k=>{
-      const i=parseInt(k);
-      if(i>=0&&i<4)slots[i]={active:d[k].active||false,can_id:d[k].can_id||'',label:d[k].label||'',byte_index:d[k].byte_index||0,hexVal:'--',decVal:'--'};
+      const i=parseInt(k); if(i>=0&&i<4) slots[i]={active:d[k].active||false,can_id:d[k].can_id||'',label:d[k].label||'',byte_index:d[k].byte_index||0,hexVal:'--',decVal:'--'};
     });
     renderSlots();
   });
 }
 
-// ── OTA ───────────────────────────────────────────────────────
+// ── OTA ───────────────────────────────────────────────────────────
 function triggerOTA(){
   const url=document.getElementById('otaUrl').value.trim();
   if(!url.startsWith('http')){showToast('URL tidak valid','err');return;}
   db.ref('/ota/url').set(url).then(()=>showToast('🚀 OTA dikirim!')).catch(e=>showToast('❌ '+e.message,'err'));
 }
 
-// ── ESP32 CONNECT ─────────────────────────────────────────────
+// ── ESP32 CONNECT (opsional, lokal) ───────────────────────────────
 async function connectESP(){
-  const ip=document.getElementById('espIp').value.trim();
-  if(!ip)return;
-  espBase='http://'+ip;
-  setDot('espDot','espLabel',false,'...');
+  const ip=document.getElementById('espIp').value.trim(); if(!ip)return;
+  espBase='http://'+ip; setDot('espDot','espLabel',false,'...');
   try{
     const s=await fetchESP('/api/status',3000);
     setDot('espDot','espLabel',true,'Online');
-    updateDevCard(s);
     document.getElementById('fmDev').style.display='block';
     document.getElementById('iEspIp').textContent=s.ip||ip;
     document.getElementById('iEspSt').textContent=s.recording?'● RECORDING':'■ Standby';
-    await loadFiles();
+    updateDevCard(s);
     if(espTimer)clearInterval(espTimer);
-    espTimer=setInterval(async()=>{
-      try{updateDevCard(await fetchESP('/api/status',2000));}
-      catch(e){setDot('espDot','espLabel',false,'Timeout');}
-    },5000);
+    espTimer=setInterval(async()=>{try{updateDevCard(await fetchESP('/api/status',2000));}catch(e){setDot('espDot','espLabel',false,'Timeout');}},5000);
     showToast('✅ Terhubung ke '+ip);
   }catch(e){setDot('espDot','espLabel',false,'Gagal');showToast('❌ Tidak bisa terhubung ke '+ip,'err');}
 }
 
 async function fetchESP(path,timeout=8000){
-  const ctrl=new AbortController();
-  const tid=setTimeout(()=>ctrl.abort(),timeout);
-  const res=await fetch(espBase+path,{signal:ctrl.signal});
-  clearTimeout(tid);
-  if(!res.ok)throw new Error('HTTP '+res.status);
-  return res.json();
+  const ctrl=new AbortController(); const tid=setTimeout(()=>ctrl.abort(),timeout);
+  const res=await fetch(espBase+path,{signal:ctrl.signal}); clearTimeout(tid);
+  if(!res.ok)throw new Error('HTTP '+res.status); return res.json();
 }
 
 function updateDevCard(s){
@@ -725,245 +683,211 @@ function updateDevCard(s){
   document.getElementById('fmStatus').textContent=rec?'● REC':'■ Standby';
   document.getElementById('fmStatus').className='fm-dv'+(rec?' rec':'');
   document.getElementById('fmSesi').textContent=s.session||'-';
-  document.getElementById('fmFrames').textContent=s.msg_count??'-';
-  document.getElementById('fmMarkers').textContent=s.marker_count??'-';
+  document.getElementById('fmFrames').textContent=s.msg_count!=null?s.msg_count:'-';
+  document.getElementById('fmMarkers').textContent=s.marker_count!=null?s.marker_count:'-';
 }
 
-// ── FILE LIST ─────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  TAB FILES — baca metadata dari Firebase /sessions (ditulis ESP32)
+//  Download file via Telegram getFile API
+// ══════════════════════════════════════════════════════════════════
 async function loadFiles(){
   const el=document.getElementById('fmList');
-  el.innerHTML='<div style="text-align:center;padding:20px"><div class="loader" style="margin:0 auto"></div></div>';
-
-  // Ambil Firebase ID token (dipakai sebagai OAuth Bearer untuk Drive API)
+  el.innerHTML='<div style="text-align:center;padding:30px"><div class="loader" style="margin:0 auto"></div><div style="margin-top:12px;color:var(--dim);font-size:.75rem">Memuat dari Firebase...</div></div>';
   try {
-    const user = auth_fb.currentUser;
-    if(user) gdriveToken = await user.getIdToken(true);
-  } catch(e) { console.warn("Token err:", e); }
-
-  // ── Coba Google Drive dulu (akses dari mana saja) ─────────
-  if(gdriveToken) {
-    try{
-      const q   = encodeURIComponent(`'${GDRIVE_FOLDER_ID}' in parents and trashed=false and mimeType='text/csv'`);
-      const url = `${GDRIVE_BASE}/files?q=${q}&fields=files(id,name,size,modifiedTime)&orderBy=modifiedTime+desc`;
-      const res = await fetch(url, {headers:{Authorization:'Bearer '+gdriveToken}});
-      if(res.ok){
-        const data = await res.json();
-        fmFiles = (data.files||[]).map(f=>({
-          id:   f.id,          // Google Drive file ID
-          name: f.name,
-          size: parseInt(f.size||0),
-          date: f.modifiedTime,
-          src:  'gdrive'       // marker: file dari GDrive
-        }));
-        renderFiles();
-        const b=document.getElementById('badge-files');
-        b.textContent=fmFiles.length; b.classList.toggle('show',fmFiles.length>0);
-        showToast('📁 '+fmFiles.length+' file dari Google Drive');
-        return;
-      }
-    } catch(e){ console.warn("[GDrive] list err:", e); }
-  }
-
-  // ── Fallback: ESP32 lokal (jika 1 WiFi) ───────────────────
-  if(espBase){
-    try{
-      fmFiles = await fetchESP('/api/files');
-      fmFiles = fmFiles.map(f=>({...f, src:'esp32'}));
-      renderFiles();
-      const b=document.getElementById('badge-files');
-      b.textContent=fmFiles.length; b.classList.toggle('show',fmFiles.length>0);
-      showToast('📁 '+fmFiles.length+' file dari ESP32 lokal');
+    const snap = await db.ref('/sessions').once('value');
+    const data = snap.val();
+    if (!data) {
+      el.innerHTML='<div style="text-align:center;padding:30px;color:var(--dim);font-size:.75rem">Belum ada sesi tersimpan.<br>Rekam sesi → stop → file otomatis muncul di sini.</div>';
       return;
-    }catch(e2){ console.warn("[ESP32] list err:", e2); }
+    }
+    // Konversi objek Firebase ke array, sort by ts descending
+    fmFiles = Object.entries(data)
+      .map(([key, v]) => ({
+        key,
+        file_name: v.file_name || key+'.csv',
+        file_id:   v.tg_file_id || '',
+        frames:    v.frames != null ? v.frames : '-',
+        markers:   v.markers != null ? v.markers : '-',
+        date:      v.date || '-',
+        date_ts:   v.ts || 0,
+        tg_ok:     v.tg_ok || false,
+        file_size: 0
+      }))
+      .sort((a,b) => b.date_ts - a.date_ts);
+
+    renderFiles();
+    const badge = document.getElementById('badge-files');
+    badge.textContent = fmFiles.length;
+    badge.classList.toggle('show', fmFiles.length > 0);
+    showToast('📁 '+fmFiles.length+' sesi dari Firebase', 'info');
+  } catch(e) {
+    console.error('[Files]', e);
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--red);font-size:.75rem">⚠️ '+e.message+'</div>';
+    showToast('❌ '+e.message, 'err');
   }
-
-  el.innerHTML='<div style="text-align:center;padding:20px;color:var(--dim);font-size:.75rem">Login ke Firebase dulu<br>atau Connect ke ESP32</div>';
-}
-
-// Helper untuk avoid nested template literal (crash JS)
-function getDlUrl(f, name){
-  if(f.src==='gdrive' && f.id) return 'https://drive.google.com/uc?export=download&id='+f.id;
-  return espBase+'/download?f='+name;
 }
 
 function renderFiles(){
   const el=document.getElementById('fmList');
-  if(!fmFiles.length){el.innerHTML='<div style="text-align:center;padding:30px;color:var(--dim);font-size:.75rem">Belum ada file CSV di SD</div>';return;}
-  const sorted=[...fmFiles].sort((a,b)=>b.name.localeCompare(a.name));
-  el.innerHTML=sorted.map(f=>{
-    const name=f.name.startsWith('/')?f.name.substring(1):f.name;
-    const isAct=name===fmActive;
-    const m=name.match(/(\d{4})(\d{2})(\d{2})/);
-    const dateStr=m?m[3]+'/'+m[2]+'/'+m[1]:'';
-    return`<div class="fm-item ${isAct?'active':''}" onclick="selectFile('${name}','${f.id||''}')">
-      <div class="fm-fname">📄 ${name}</div>
-      <div class="fm-meta"><span class="fm-size">${fmtBytes(f.size)}</span>${dateStr?'<span>'+dateStr+'</span>':''}</div>
-      <div class="fm-acts">
-        <button class="btn-a ba-prev" onclick="event.stopPropagation();selectFile('${name}')">👁 Preview</button>
-        <button class="btn-a ba-tbl" onclick="event.stopPropagation();quickLoadTable('${name}')">📋 Ke Tabel</button>
-        <a class="btn-a ba-dl" href="${getDlUrl(f,name)}" 
-          download="${name}" target="_blank" onclick="event.stopPropagation()">⬇ DL</a>
-        <button class="btn-a ba-del" onclick="event.stopPropagation();askDelete('${name}')">🗑</button>
-      </div>
-    </div>`;
+  if(!fmFiles.length){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--dim);font-size:.75rem">Belum ada file.</div>'; return; }
+  el.innerHTML=fmFiles.map((f,idx)=>{
+    const isAct = f.file_name===fmActive;
+    const hasTg  = f.file_id && f.tg_ok;
+    const tgBadge = hasTg
+      ? '<span style="color:var(--tg);font-size:.6rem">📨 Telegram</span>'
+      : '<span style="color:var(--dim);font-size:.6rem">⚠ Tidak terkirim</span>';
+    return '<div class="fm-item '+(isAct?'active':'')+'" onclick="selectFile('+idx+')">'
+      +'<div class="fm-fname">📄 '+f.file_name+'</div>'
+      +'<div class="fm-meta"><span>'+f.date+'</span>'+tgBadge+'</div>'
+      +'<div class="fm-meta" style="margin-top:2px">'
+        +'<span style="color:var(--cyan)">▸ '+f.frames+' frame</span>'
+        +'<span style="color:var(--yellow)">⚑ '+f.markers+' marker</span>'
+      +'</div>'
+      +'<div class="fm-acts">'
+        +(hasTg ? '<button class="btn-a ba-prev" onclick="event.stopPropagation();selectFile('+idx+')">👁 Preview</button>' : '')
+        +(hasTg ? '<button class="btn-a ba-tbl" onclick="event.stopPropagation();tgLoadTable('+idx+')">📋 Tabel</button>' : '')
+        +(hasTg ? '<button class="btn-a ba-dl" onclick="event.stopPropagation();tgDownload('+idx+')">⬇ DL</button>' : '')
+      +'</div>'
+    +'</div>';
   }).join('');
 }
 
-function fmtBytes(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB';}
+// Ambil URL download dari Telegram (file_id → path → URL)
+async function getTgUrl(file_id){
+  const res=await fetch(TG_API+'/getFile?file_id='+file_id);
+  const json=await res.json();
+  if(!json.ok) throw new Error('getFile: '+json.description);
+  return 'https://api.telegram.org/file/bot'+TG_TOKEN+'/'+json.result.file_path;
+}
 
-async function selectFile(name,fileId){
-  fmActive=name;
-  fmActiveId=fileId||'';  // Google Drive file ID
+async function selectFile(idx){
+  const f=fmFiles[idx];
+  fmActive=f.file_name; fmActiveName=f.file_name;
   renderFiles();
-  document.getElementById('fmTitle').textContent='📄 '+name;
+  document.getElementById('fmTitle').textContent='📄 '+f.file_name;
   document.getElementById('fmToolbar2').style.display='flex';
-  document.getElementById('fmActiveFile').textContent=name;
-  await previewFile();
-}
-
-// Preview file CSV — support Google Drive dan ESP32 lokal
-async function previewFile(){
-  if(!fmActive) return;
-  const filter = document.getElementById('fmFilter').value.trim().toUpperCase();
-  const limit  = parseInt(document.getElementById('fmLimit').value);
+  document.getElementById('fmActiveFile').textContent=f.file_name;
   showFmLoading();
-
-  try{
-    let csvText = '';
-
-    // ── Ambil CSV dari Google Drive ──────────────────────────
-    if(fmActiveId && gdriveToken){
-      const url = `https://www.googleapis.com/drive/v3/files/${fmActiveId}?alt=media`;
-      const res = await fetch(url, {headers:{Authorization:'Bearer '+gdriveToken}});
-      if(!res.ok) throw new Error('GDrive fetch HTTP '+res.status);
-      csvText = await res.text();
-    }
-    // ── Fallback: ESP32 lokal ────────────────────────────────
-    else if(espBase){
-      const res = await fetch(espBase+`/api/preview?f=${fmActive}&limit=${limit}`+(filter?`&filter=${filter}`:''));
-      if(!res.ok) throw new Error('ESP32 HTTP '+res.status);
-      const data = await res.json();
-      renderFmTable(data);
-      document.getElementById('fmRows').textContent=data.total;
-      document.getElementById('fmFilterSt').textContent=filter||'Semua';
-      return;
-    } else {
-      throw new Error('Tidak ada sumber data');
-    }
-
-    // ── Parse CSV text → tabel ───────────────────────────────
-    const lines = csvText.split(/
-?
-/).filter(l=>l.trim());
-    if(lines.length < 2) throw new Error('File kosong');
-
-    const cols = lines[0].split(',');
-    const idx  = {};
-    cols.forEach((c,i)=>idx[c.trim()]=i);
-
-    let rows = lines.slice(1);
-
-    // Filter CAN ID
-    const cidIdx = idx['can_id_hex'] ?? 1;
-    if(filter) rows = rows.filter(r=>{
-      const parts=r.split(',');
-      return (parts[cidIdx]||'').toUpperCase()===filter;
-    });
-
-    // Limit
-    const total = rows.length;
-    if(limit < 9999) rows = rows.slice(0, limit);
-
-    // Build data object seperti format ESP32
-    const data = {
-      columns: cols.map(c=>c.trim()),
-      rows:    rows.map(r=>r.split(',')),
-      total:   total
-    };
-    renderFmTable(data);
-    document.getElementById('fmRows').textContent=total;
-    document.getElementById('fmFilterSt').textContent=filter||'Semua';
-
-  }catch(e){
-    document.getElementById('fmEmpty').innerHTML=`<div style="font-size:2rem;opacity:.3">⚠️</div><div style="font-size:.78rem">Gagal: ${e.message}</div>`;
-    document.getElementById('fmEmpty').style.display='flex';
-    document.getElementById('fmTblWrap').style.display='none';
-  }
+  try {
+    fmActiveUrl=await getTgUrl(f.file_id);
+    await previewFromUrl(fmActiveUrl);
+  } catch(e) { showFmError('Gagal ambil file: '+e.message); }
 }
 
-function applyFilter(){previewFile();}
+async function previewFromUrl(url){
+  const filter=document.getElementById('fmFilter').value.trim().toUpperCase();
+  const limit=parseInt(document.getElementById('fmLimit').value);
+  showFmLoading();
+  try {
+    const res=await fetch(url); if(!res.ok) throw new Error('HTTP '+res.status);
+    parseAndRenderCSV(await res.text(), filter, limit);
+  } catch(e) { showFmError('Gagal load CSV: '+e.message); }
+}
 
-function showFmLoading(){
-  document.getElementById('fmEmpty').innerHTML='<div class="loader"></div><div>Memuat...</div>';
-  document.getElementById('fmEmpty').style.display='flex';
-  document.getElementById('fmTblWrap').style.display='none';
+function parseAndRenderCSV(text, filter, limit){
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());
+  if(lines.length<2){showFmError('File kosong atau format salah');return;}
+  const cols=lines[0].split(',').map(c=>c.trim()), idx={};
+  cols.forEach((c,i)=>idx[c]=i);
+  let rows=lines.slice(1);
+  const cidI=idx['can_id_hex']!=null?idx['can_id_hex']:1;
+  if(filter) rows=rows.filter(r=>(r.split(',')[cidI]||'').trim().toUpperCase()===filter);
+  const total=rows.length;
+  if(limit<9999) rows=rows.slice(0,limit);
+  renderFmTable({columns:cols, rows:rows.map(r=>r.split(',')), total});
+  document.getElementById('fmRows').textContent=total;
+  document.getElementById('fmFilterSt').textContent=filter||'Semua';
+}
+
+async function applyFilter(){ if(fmActiveUrl) await previewFromUrl(fmActiveUrl); }
+
+async function loadToLiveTable(){
+  if(!fmActiveUrl){showToast('Pilih file dulu','err');return;}
+  showToast('📋 Memuat ke tabel...','info');
+  try {
+    const res=await fetch(fmActiveUrl); const text=await res.text();
+    const filter=document.getElementById('fmFilter').value.trim().toUpperCase();
+    const limit=parseInt(document.getElementById('fmLimit').value);
+    const lines=text.split(/\r?\n/).filter(l=>l.trim());
+    if(lines.length<2){showToast('File kosong','err');return;}
+    const cols=lines[0].split(',').map(c=>c.trim()), idx={};
+    cols.forEach((c,i)=>idx[c]=i);
+    let rows=lines.slice(1);
+    if(filter) rows=rows.filter(r=>(r.split(',')[idx['can_id_hex']]||'').trim().toUpperCase()===filter);
+    if(limit<9999) rows=rows.slice(0,limit);
+    const tbody=document.getElementById('canTableBody'); tbody.innerHTML=''; liveRows=[];
+    rows.forEach(row=>{
+      const r=row.split(',');
+      const mk=r[idx['is_marker']]==='1',ex=r[idx['is_extended']]==='1',rt=r[idx['is_rtr']]==='1';
+      const flag=mk?'<span class="tag mark">MRK</span>':ex?'<span class="tag ext">EXT</span>':rt?'<span class="tag rtr">RTR</span>':'<span style="color:var(--dim);font-size:.62rem">STD</span>';
+      const tr=document.createElement('tr'); if(mk)tr.className='row-mrk';
+      tr.innerHTML='<td class="td-ts">'+(r[idx['timestamp_ms']]||'')+'</td><td class="td-id '+(mk?'td-mrk':'')+'">'+(r[idx['can_id_hex']]||'')+'</td><td>'+(r[idx['dlc']]||'')+'</td><td class="td-data">'+(r[idx['data_hex']]||'')+'</td><td>'+flag+'</td>';
+      tbody.appendChild(tr); liveRows.push(tr);
+    });
+    csvFname=fmActiveName;
+    document.getElementById('tblFname').textContent='📄 '+fmActiveName;
+    setTblMode('csv'); switchTab('live');
+    showToast('✅ '+rows.length+' baris dimuat ke tabel');
+  } catch(e){showToast('❌ '+e.message,'err');}
+}
+
+async function tgLoadTable(idx){
+  const f=fmFiles[idx]; fmActive=f.file_name; fmActiveName=f.file_name;
+  try { fmActiveUrl=await getTgUrl(f.file_id); await loadToLiveTable(); }
+  catch(e){showToast('❌ '+e.message,'err');}
+}
+
+async function tgDownload(idx){
+  const f=fmFiles[idx];
+  try {
+    showToast('⏳ Menyiapkan...','info');
+    const url=await getTgUrl(f.file_id);
+    const a=document.createElement('a'); a.href=url; a.download=f.file_name; a.target='_blank'; a.click();
+  } catch(e){showToast('❌ '+e.message,'err');}
+}
+
+async function dlCurrentFile(){
+  if(!fmActiveUrl) return;
+  const a=document.createElement('a'); a.href=fmActiveUrl; a.download=fmActiveName; a.target='_blank'; a.click();
 }
 
 function renderFmTable(data){
-  const wrap=document.getElementById('fmTblWrap'),empty=document.getElementById('fmEmpty'),tbody=document.getElementById('fmTblBody');
-  if(!data.rows.length){
-    empty.innerHTML='<div style="font-size:2rem;opacity:.3">🔍</div><div style="font-size:.78rem">Tidak ada data</div>';
-    empty.style.display='flex';wrap.style.display='none';return;
-  }
-  const cols=data.columns,idx={};cols.forEach((c,i)=>idx[c]=i);
+  const wrap=document.getElementById('fmTblWrap'), empty=document.getElementById('fmEmpty'), tbody=document.getElementById('fmTblBody');
+  if(!data.rows||!data.rows.length){showFmError('Tidak ada data yang cocok');return;}
+  const cols=data.columns, idx={};
+  cols.forEach((c,i)=>idx[c]=i);
   const bc=['#00d4ff','#00ff88','#ffd700','#ff8c00','#ff88cc','#88aaff','#ff6644','#aaffaa'];
   tbody.innerHTML=data.rows.map(row=>{
     const mk=row[idx['is_marker']]==='1',ex=row[idx['is_extended']]==='1',rt=row[idx['is_rtr']]==='1';
     const flag=mk?'<span class="tag mark">MRK</span>':ex?'<span class="tag ext">EXT</span>':rt?'<span class="tag rtr">RTR</span>':'<span style="color:var(--dim);font-size:.62rem">STD</span>';
-    const bytes=(row[idx['data_hex']]||'').trim().split(' ').map((b,i)=>`<span style="color:${bc[i%bc.length]}">${b}</span>`).join(' ');
-    const mlbl=mk?`<span style="color:var(--yellow);font-weight:600">${row[idx['marker_label']]||''}</span>`:'';
-    return`<tr class="${mk?'row-mrk':''}">
-      <td class="td-ts">${row[idx['timestamp_ms']]||''}</td>
-      <td class="td-id ${mk?'td-mrk':''}">${row[idx['can_id_hex']]||''}</td>
-      <td style="text-align:center">${row[idx['dlc']]||''}</td>
-      <td class="td-data" style="font-size:.7rem">${bytes}</td>
-      <td>${flag}</td><td>${mlbl}</td></tr>`;
+    const bytes=(row[idx['data_hex']]||'').trim().split(' ').map((b,i)=>'<span style="color:'+bc[i%bc.length]+'">'+b+'</span>').join(' ');
+    const mlbl=mk?'<span style="color:var(--yellow);font-weight:600">'+(row[idx['marker_label']]||'')+'</span>':'';
+    return '<tr class="'+(mk?'row-mrk':'')+'"><td class="td-ts">'+(row[idx['timestamp_ms']]||'')+'</td><td class="td-id '+(mk?'td-mrk':'')+'">'+(row[idx['can_id_hex']]||'')+'</td><td style="text-align:center">'+(row[idx['dlc']]||'')+'</td><td class="td-data" style="font-size:.7rem">'+bytes+'</td><td>'+flag+'</td><td>'+mlbl+'</td></tr>';
   }).join('');
-  wrap.style.display='block';empty.style.display='none';
+  wrap.style.display='block'; empty.style.display='none';
 }
 
-function quickLoadTable(name){fmActive=name;document.getElementById('fmFilter').value='';loadToLiveTable();}
-function dlCurrentFile(){
-  if(!fmActive)return;
-  const a=document.createElement('a');
-  if(fmActiveId){
-    a.href=`https://drive.google.com/uc?export=download&id=${fmActiveId}`;
-    a.target='_blank';
-  } else if(espBase){
-    a.href=espBase+'/download?f='+fmActive;
-  } else return;
-  a.download=fmActive;
-  a.click();
+function showFmLoading(){
+  document.getElementById('fmEmpty').innerHTML='<div class="loader"></div><div style="margin-top:10px;font-size:.75rem">Memuat dari Telegram...</div>';
+  document.getElementById('fmEmpty').style.display='flex';
+  document.getElementById('fmTblWrap').style.display='none';
 }
 
-// ── DELETE ────────────────────────────────────────────────────
-function askDelete(name){delTarget=name;document.getElementById('delFileName').textContent=name;document.getElementById('delModal').classList.add('show');}
-function closeDelModal(){document.getElementById('delModal').classList.remove('show');delTarget='';}
-async function confirmDelete(){
-  closeDelModal();if(!delTarget)return;
-  try{
-    const res=await fetchESP('/api/delete?f='+delTarget);
-    if(res.success){
-      showToast('🗑 Dihapus: '+delTarget);
-      if(fmActive===delTarget){fmActive='';document.getElementById('fmToolbar2').style.display='none';document.getElementById('fmTblWrap').style.display='none';document.getElementById('fmEmpty').style.display='flex';document.getElementById('fmEmpty').innerHTML='<div style="font-size:2rem;opacity:.3">📁</div><div style="font-size:.78rem">File dihapus</div>';document.getElementById('fmTitle').textContent='Pilih file dari sidebar';}
-      await loadFiles();
-    }else showToast('❌ '+(res.error||'Gagal hapus'),'err');
-  }catch(e){showToast('❌ '+e.message,'err');}
+function showFmError(msg){
+  document.getElementById('fmEmpty').innerHTML='<div style="font-size:2rem;opacity:.3">⚠️</div><div style="font-size:.78rem">'+msg+'</div>';
+  document.getElementById('fmEmpty').style.display='flex';
+  document.getElementById('fmTblWrap').style.display='none';
 }
 
-// ── UTILS ─────────────────────────────────────────────────────
-function showToast(msg,type='ok'){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.className='toast '+type+' show';
-  setTimeout(()=>el.classList.remove('show'),3000);
-}
-function parseHex(s){if(!s)return[];return s.trim().split(' ').map(h=>parseInt(h,16)).filter(v=>!isNaN(v));}
+// ── UTILS ─────────────────────────────────────────────────────────
+function fmtBytes(b){ if(!b||b<1024)return (b||0)+' B'; if(b<1048576)return (b/1024).toFixed(1)+' KB'; return (b/1048576).toFixed(2)+' MB'; }
+function parseHex(s){ if(!s)return[]; return s.trim().split(' ').map(h=>parseInt(h,16)).filter(v=>!isNaN(v)); }
+function showToast(msg,type='ok'){ const el=document.getElementById('toast'); el.textContent=msg; el.className='toast '+type+' show'; setTimeout(()=>el.classList.remove('show'),3000); }
 
-// Byte grid init
-(function(){const g=document.getElementById('byteGrid');for(let i=0;i<8;i++){const b=document.createElement('div');b.className='byte-box';b.innerHTML=`<span class="bidx">B${i}</span><span class="bval" style="color:var(--border)">--</span>`;g.appendChild(b);}})();
+// Init byte grid
+(function(){ const g=document.getElementById('byteGrid'); for(let i=0;i<8;i++){const b=document.createElement('div');b.className='byte-box';b.innerHTML='<span class="bidx">B'+i+'</span><span class="bval" style="color:var(--border)">--</span>';g.appendChild(b);} })();
 
-// Modal overlay click
-document.getElementById('delModal').addEventListener('click',function(e){if(e.target===this)closeDelModal();});
 document.getElementById('espIp').addEventListener('keydown',e=>{if(e.key==='Enter')connectESP();});
 document.getElementById('fmFilter').addEventListener('keydown',e=>{if(e.key==='Enter')applyFilter();});
 </script>
